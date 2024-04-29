@@ -22,17 +22,16 @@ export default function List({
   endpoint
 }: ListProps): React.ReactElement {
   const [media, setMedia] = useState<Media[]>([]);
- 
-  async function getEndpoint() {
-    try {
-      const result = await axios.get(endpoint);
-      setMedia(result.data.data);
-    } catch (error) {}
-  }
 
   useEffect(() => {
+    async function getEndpoint() {
+      try {
+        const result = await axios.get(endpoint);
+        setMedia(result.data.data);
+      } catch (error) {}
+    }
     getEndpoint();
-  }, []);
+  });
 
   return (
     <div className={styles.listContainer}>
@@ -44,13 +43,7 @@ export default function List({
               return <FeatureCard key={index} index={index + 1} item={item} />;
             }
           } else {
-            return (
-              <Cards
-                key={index}
-                defaultCard={defaultCard}
-                item={item}
-              />
-            );
+            return <Cards key={index} defaultCard={defaultCard} item={item} />;
           }
         })}
       </div>

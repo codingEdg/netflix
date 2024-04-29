@@ -8,8 +8,6 @@ import { Play, Info } from '../../utils/icons';
 import { ModalContext } from '../../context/ModalContext';
 import styles from '../../styles/Banner.module.scss';
 
-
-
 export default function Banner() {
   const [media, setMedia] = useState<Media>();
   const random = Math.floor(Math.random() * 20);
@@ -20,16 +18,15 @@ export default function Banner() {
     setIsModal(true);
   };
 
-  const getMedia = async () => {
-    try {
-      const result = await axios.get('/api/popular?type=movie');
-      setMedia(result.data.data[random]);
-    } catch (error) {}
-  };
-
   useEffect(() => {
+    const getMedia = async () => {
+      try {
+        const result = await axios.get('/api/popular?type=movie');
+        setMedia(result.data.data[random]);
+      } catch (error) {}
+    };
     getMedia();
-  }, []);
+  });
 
   return (
     <div className={styles.spotlight}>
